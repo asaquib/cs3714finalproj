@@ -6,7 +6,7 @@ Just the frontend for now
 
 Login page: Jun
 
-Settings page - (change color, change miles to kilometers) : Justin
+Settings page - (change color, change miles to kilometers) : Jason
 
 Map page: Pejman
 
@@ -14,7 +14,7 @@ Home page: Afsayh
 
 Friend's list: Afsayh
 
-Trail page: Justin
+Trail page: Jason
 
 Event page: Pejman
 
