@@ -3,20 +3,18 @@
 # Can list who is doing what screen here. 
 
 Just the frontend for now
+--------------------------------
 
-Login page: Jun
+Login page/Profile page: Jun
 
-Settings page - (change color, change miles to kilometers) : Jason
+Settings page - (change color, change miles to kilometers)/Trail page: Jason
 
-Map page: Pejman
+Map page/Event Page: Pejman
 
-Home page: Afsayh
+Home page/Friend's list: Afsayh
 
-Friend's list: Afsayh
+--------------------------------
 
-Trail page: Jason
+Intent STUFF - Afsayh
 
-Event page: Pejman
-
-Profile page: Jun
-
+Login STUFF - Jun
