@@ -13,10 +13,15 @@ Home page/Friend's list: Afsayh
 
 --------------------------------
 
-Fragment Changing??? STUFF - Afsayh
+Fragment Changing???(MAINFRAGMENT??) STUFF / Create MongoDB- Afsayh
 
-Login&Profile information STUFF - Jun
+Login&Profile login with FB login - Jun
 
-Fix the map - Pejman
+Fix the map / Hiking map JSON parsing / event(FB)- Pejman
 
-Hiking API JSON Parsing / trail page - Jason
+Hiking Review API JSON Parsing / trail page / Friendlist - Jason
+
+
+Creating a DB / Server
+Search engine google api
+
