@@ -5,8 +5,6 @@
 Just the frontend for now
 --------------------------------
 
-Login page/Profile page: Jun
-
 Settings page - (change color, change miles to kilometers)/Trail page: Jason
 
 Map page/Event Page: Pejman
@@ -15,6 +13,10 @@ Home page/Friend's list: Afsayh
 
 --------------------------------
 
-Intent STUFF - Afsayh
+Fragment Changing??? STUFF - Afsayh
 
-Login STUFF - Jun
+Login&Profile information STUFF - Jun
+
+Fix the map - Pejman
+
+Hiking API JSON Parsing / trail page - Jason
