@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="10dp"
 
         android:background="@drawable/ic_triangle"
         android:text="LOGIN"
@@ -57,4 +57,12 @@
         app:srcCompat="@drawable/huckleberry_trail"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="68dp" />
+
+    <Button
+        android:id="@+id/Sign Up"
+        android:layout_width="202dp"
+        android:layout_height="43dp"
+        android:text="Sign Up"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="447dp" />
 </android.support.constraint.ConstraintLayout>
