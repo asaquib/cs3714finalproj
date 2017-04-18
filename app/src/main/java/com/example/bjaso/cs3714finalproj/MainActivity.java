@@ -3,7 +3,6 @@ package com.example.bjaso.cs3714finalproj;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -23,21 +22,13 @@ import com.facebook.AccessToken;
  * Created by bjaso on 4/4/2017.
  */
 
-public class MainActivity extends AppCompatActivity {
 
-    private FragmentManager fragmentManager;
-    private Fragment TrailFragment;
+public class MainActivity extends AppCompatActivity {
+    
     private android.support.v4.app.Fragment TrailFragment, eventFragment, mapFragment;
     private ImageView image;
     private Button map;
     private FragmentManager fragmentManager;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.event);
-
-    }
 
     private SharedPreferences prefs;
 
