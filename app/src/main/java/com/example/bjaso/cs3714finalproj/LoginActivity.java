@@ -5,55 +5,69 @@ package com.example.bjaso.cs3714finalproj;
  */
 
 
-import com.facebook.FacebookSdk;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Toast;
 
-public class LoginActivity extends Activity implements View.OnClickListener {
 
-    private EditText password, username;
-    private Button login;
-    SharedPreferences.Editor editor;
-    SharedPreferences prefs;
+import java.util.Arrays;
+
+public class LoginActivity extends Activity implements View.OnClickListener{
+
+
+    CallbackManager callbackManager;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        editor = prefs.edit();
+        callbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton) view.findViewById(R.id.login_button);
 
-        login = (Button)findViewById(R.id.button);
-        login.setOnClickListener(this);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);;
+                    startActivity(intent);
+                    finish();
+                }
 
-        password = (EditText)findViewById(R.id.password);
-        username = (EditText)findViewById(R.id.username);
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(FacebookException error) {
+
+                }
+            }
+        );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onClick(View v) {
-        if ((username.getText().toString().equals("hike")) && (password.getText().toString().equals("123"))) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("loggedin",true);
-            this.startActivity(intent);
-            finish();
-        }
-//        if(!busyNetworking){
-//
-//            logintask = new UserLoginTask(this,username.getText().toString(),password.getText().toString());
-//
-//            logintask.execute();
-//        }
-
-
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
     }
+
+
+
 /*
     @Override
     public void LoginStatus(String status) {
