@@ -17,6 +17,8 @@ import android.widget.ImageView;
 
 
 import com.facebook.AccessToken;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 
 /**
  * Created by bjaso on 4/4/2017.
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("hw3", "status:" + prefs.getString("status", ""));
 
 
-        if (1==0) {
+        if (0==0) {
 
 
             Log.d("hiking", "logged in");
@@ -59,6 +61,17 @@ public class MainActivity extends AppCompatActivity {
             finish();
 
         }
+
+        GoogleApiClient mGoogleApiClient;
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
+
+        // PlaceDetectionApi.getCurrentPlace();
     }
 
 //    @Override

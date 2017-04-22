@@ -47,6 +47,10 @@
         </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/fb_login_protocol_scheme"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDGCXoRyHSHeHTK9y5uNbTdlshFmSB9_Es"/>
+
 
     </application>
 
