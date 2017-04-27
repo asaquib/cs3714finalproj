@@ -47,16 +47,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         fragmentManager = getSupportFragmentManager();
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
+        // TEST MAP
+//        Intent myIntent = new Intent(MainActivity.this, MapsActivity.class); //Optional parameters
+//        this.startActivity(myIntent);
+
         Log.d("final", "status:" + prefs.getString("status", ""));
 
-
-
         if (token != null) {
-
-
             Log.d("hiking", "logged in");
-
-
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             this.startActivity(intent);
@@ -80,21 +78,18 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             fragmentManager.beginTransaction().replace(R.id.frame, homeFragment ).commit();
         } else {
 
-                homeFragment = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT);
-                // Get referencecs to the fragments if they existed, null otherwise
-                eventFragment = fragmentManager.findFragmentByTag(EventFragment.EVENT_FRAGMENT);
-//                ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(MapFragment.MAP_FRAGMENT);
-                mapFragment = fragmentManager.findFragmentByTag(MapFragment.MAP_FRAGMENT);
+            homeFragment = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT);
+            // Get referencecs to the fragments if they existed, null otherwise
+            eventFragment = fragmentManager.findFragmentByTag(EventFragment.EVENT_FRAGMENT);
+            // ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(MapFragment.MAP_FRAGMENT);
+            mapFragment = fragmentManager.findFragmentByTag(MapFragment.MAP_FRAGMENT);
 
-                trailFragment = fragmentManager.findFragmentByTag(TrailFragment.TRAIL_FRAGMENT);
+            trailFragment = fragmentManager.findFragmentByTag(TrailFragment.TRAIL_FRAGMENT);
 
-            }
-
-
-
-
+        }
 
     }
+
     public void changeFragment(String fragment_name) {
 
         Fragment fragment;

@@ -21,12 +21,6 @@ public class trailsDB {
 //            + DBConstants.COLUMN_NAME_STATUS + " boolean);";
 
 
-
-
-
-
-
-
     // This constructor requires Context
 //    public StepCountDB(Context context){
 //        super(context, DATABASE_NAME, null, DATABASE_VERSION);
