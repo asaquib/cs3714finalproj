@@ -63,7 +63,7 @@ public class backgroundService extends Service{
 
         // Lets initiate the database controller
         database_controller = new DBController(getApplicationContext(), this, getApplication());
-        database_controller.OpenDB();
+//        database_controller.OpenDB();
 
 
         return Service.START_STICKY;
@@ -83,7 +83,7 @@ public class backgroundService extends Service{
 
         //inside onDestroy you need to 'unregister' the broadcast receiver
         unregisterReceiver(receiver);
-        database_controller.CloseDB();
+//        database_controller.CloseDB();
         database_controller = null;
 
         //also disconnect the mSocket

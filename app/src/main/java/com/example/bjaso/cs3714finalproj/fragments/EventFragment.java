@@ -1,6 +1,6 @@
 package com.example.bjaso.cs3714finalproj.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -70,11 +70,11 @@ public class EventFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         if(v.equals(home))
         {
-//            activity.changeFragment(HomeFragment.HOME_FRAGMENT);
+            activity.changeFragment(HomeFragment.HOME_FRAGMENT);
         }
         if(v.equals(event))
         {
-//            activity.changeFragment(EventFragment.EVENT_FRAGMENT);
+            activity.changeFragment(EventFragment.EVENT_FRAGMENT);
         }
         if(v.equals(map))
         {

@@ -1,5 +1,6 @@
 package com.example.bjaso.cs3714finalproj.fragments;
 
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,27 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
 /**
- * Created by bjaso on 4/18/2017.
+ * Created by pejman on 4/27/2017.
  */
 
-public class TrailFragment extends Fragment implements View.OnClickListener{
-    public static final String TRAIL_FRAGMENT = "trail_fragment";
-    private ImageView image;
+public class HomeFragment extends Fragment implements View.OnClickListener {
+    public static final String HOME_FRAGMENT = "home_fragment";
     private Button home;
     private Button event;
     private Button map;
     private HomeScreenInteraction activity;
-    public static TrailFragment newInstance() {
-        TrailFragment fragment = new TrailFragment();
-        return fragment;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -40,33 +34,23 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
                     + " must implement HomeScreenInteraction");
         }
     }
-    public TrailFragment() {
-        // Required empty public constructor
-    }
-
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_trail, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        image = (ImageView) view.findViewById(R.id.trailImage);
-        image.setImageResource(R.drawable.huckleberry_trail);
+        View view = inflater.inflate(R.layout.home, container, false);
+
         //Navigation items
         home = (Button) view.findViewById(R.id.homeButton);
         event = (Button) view.findViewById(R.id.eventButton);
         map = (Button) view.findViewById(R.id.mapButton);
 
-
         //Navigation actions
         home.setOnClickListener(this);
         event.setOnClickListener(this);
         map.setOnClickListener(this);
-        return view;
-    }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return view;
     }
 
     @Override
@@ -83,5 +67,6 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
         {
             activity.changeFragment(MapFragment.MAP_FRAGMENT);
         }
+
     }
 }

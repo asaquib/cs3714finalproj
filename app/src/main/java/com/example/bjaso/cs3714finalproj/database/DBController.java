@@ -22,7 +22,7 @@ public class DBController {
     private Socket mSocket;
 
     public  DBController(Context context, backgroundService background_service, Application application) {
-        db_helper = new trailsDB(context);
+//        db_helper = new trailsDB(context);
         this.background_service = background_service;
         this.context = context;
 
@@ -34,20 +34,20 @@ public class DBController {
 
 
     // You need to call this open up the database
-    public void OpenDB() {
-        db = db_helper.getWritableDatabase();
-    }
+//    public void OpenDB() {
+//        db = db_helper.getWritableDatabase();
+//    }
 
 
     // When the app is no longer using the database you must release the resources. This method will do that for you.
-    public void CloseDB() {
-        db.close();
-        db = null;
-    }
+//    public void CloseDB() {
+//        db.close();
+//        db = null;
+//    }
 
 
     // To avoid any complications that could happen due to simultaneous write/read operations you must make sure to check if the DB is not busy.
-    private boolean IsFree() {
-        return !processing;
-    }
+//    private boolean IsFree() {
+//        return !processing;
+//    }
 }

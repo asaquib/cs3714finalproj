@@ -1,5 +1,6 @@
 package com.example.bjaso.cs3714finalproj;
 
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,16 +8,20 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
-
+import com.example.bjaso.cs3714finalproj.fragments.EventFragment;
+import com.example.bjaso.cs3714finalproj.fragments.HomeFragment;
+import com.example.bjaso.cs3714finalproj.fragments.MapFragment;
+import com.example.bjaso.cs3714finalproj.fragments.TaskFragment;
+import com.example.bjaso.cs3714finalproj.fragments.TrailFragment;
+import com.example.bjaso.cs3714finalproj.interfaces.ActivityInteraction;
+import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
+import com.example.bjaso.cs3714finalproj.interfaces.RetainedFragmentInteraction;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
@@ -25,26 +30,20 @@ import com.facebook.login.LoginManager;
  */
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, ActivityInteraction {
 
-    private android.support.v4.app.Fragment TrailFragment, eventFragment, mapFragment;
-    private ImageView image;
-    private Button map;
+
+    private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment;
+
     private FragmentManager fragmentManager;
     AccessToken token = AccessToken.getCurrentAccessToken();
 
     private SharedPreferences prefs;
 
-
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -65,7 +64,92 @@ public class MainActivity extends AppCompatActivity {
 
         }
         Log.d("Login Successful??", "I'm Logged in?!!!");
+        taskFragment = (TaskFragment) fragmentManager.findFragmentByTag(TaskFragment.TAG_TASK_FRAGMENT);
+
+        if (taskFragment == null) {
+
+            taskFragment = new TaskFragment();
+            fragmentManager.beginTransaction().add(taskFragment, TaskFragment.TAG_TASK_FRAGMENT).commit();
+        }
+
+        if (savedInstanceState == null) {
+
+            homeFragment = new HomeFragment();
+            // Set dashboard fragment to be the default fragment shown
+            ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(HomeFragment.HOME_FRAGMENT);
+            fragmentManager.beginTransaction().replace(R.id.frame, homeFragment ).commit();
+        } else {
+
+                homeFragment = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT);
+                // Get referencecs to the fragments if they existed, null otherwise
+                eventFragment = fragmentManager.findFragmentByTag(EventFragment.EVENT_FRAGMENT);
+//                ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(MapFragment.MAP_FRAGMENT);
+                mapFragment = fragmentManager.findFragmentByTag(MapFragment.MAP_FRAGMENT);
+
+                trailFragment = fragmentManager.findFragmentByTag(TrailFragment.TRAIL_FRAGMENT);
+
+            }
+
+
+
+
+
     }
+    public void changeFragment(String fragment_name) {
+
+        Fragment fragment;
+        Class fragmentClass = null;
+        if(fragment_name.equals(EventFragment.EVENT_FRAGMENT)){
+            fragmentClass = EventFragment.class;
+
+            Log.d("cs3714finalproj", "EVENT FRAGMENT SELECTED");
+        }
+        else if(fragment_name.equals(MapFragment.MAP_FRAGMENT)){
+            fragmentClass = MapFragment.class;
+
+            Log.d("cs3714finalproj", "MAP FRAGMENT SELECTED");
+        }
+        else if(fragment_name.equals(HomeFragment.HOME_FRAGMENT)){
+            fragmentClass = HomeFragment.class;
+
+            Log.d("cs3714finalproj", "HOME FRAGMENT SELECTED");
+        }
+        else if(fragment_name.equals(TrailFragment.TRAIL_FRAGMENT)){
+            fragmentClass = TrailFragment.class;
+
+            Log.d("cs3714finalproj", "TRAIL FRAGMENT SELECTED");
+        }
+
+        try {
+            if (fragmentClass != null) {
+                fragment = (Fragment) fragmentClass.newInstance();
+
+                FragmentTransaction ft= fragmentManager.beginTransaction();
+
+                ft.replace(R.id.frame, fragment,
+                        ((RetainedFragmentInteraction)taskFragment).getActiveFragmentTag());
+                ft.addToBackStack(null);
+                ft.commit();
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.home);
+//        fragmentManager = getSupportFragmentManager();
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -98,11 +182,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
 //    @Override
 //    public void InitiateLoginActivity() {
 //        Intent intent = new Intent(getBaseContext(), LoginScreen.class);
 //        startActivity(intent);
 //        finish();
 //    }
+    @Override
+    public void InitiateLoginActivity() {
+//        Intent intent = new Intent(getBaseContext(), LoginScreen.class);
+//        startActivity(intent);
+//        finish();
+    }
+
 }
