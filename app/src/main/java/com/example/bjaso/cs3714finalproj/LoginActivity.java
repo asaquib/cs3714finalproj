@@ -40,6 +40,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
 
     CallbackManager callbackManager;
+    AccessToken token = AccessToken.getCurrentAccessToken();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,51 +62,66 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
         }
 
-        callbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        if (token != null) {
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    Log.d("login", "Login Success");
-                    //friend json parse??? not working at this point <----------------------------------------------------__!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-                    AccessToken token = AccessToken.getCurrentAccessToken();
-                    GraphRequest graphRequest = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
+
+            Log.d("hiking", "logged in");
+
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+            finish();
+
+
+        } else {
+
+
+            callbackManager = CallbackManager.Factory.create();
+            LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                         @Override
-                        public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
-                            try {
-                                JSONArray jsonArrayFriends = jsonObject.getJSONObject("friendlist").getJSONArray("data");
-                                JSONObject friendlistObject = jsonArrayFriends.getJSONObject(0);
-                                String frienListID = friendlistObject.getString("id");
-                                //myNewGraphReq(friendListID);
+                        public void onSuccess(LoginResult loginResult) {
+                            Log.d("login", "Login Success");
+                            //friend json parse??? not working at this point <----------------------------------------------------__!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+                            AccessToken token = AccessToken.getCurrentAccessToken();
+                            GraphRequest graphRequest = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
+                                    try {
+                                        JSONArray jsonArrayFriends = jsonObject.getJSONObject("friendlist").getJSONArray("data");
+                                        JSONObject friendlistObject = jsonArrayFriends.getJSONObject(0);
+                                        String frienListID = friendlistObject.getString("id");
+                                        //myNewGraphReq(friendListID);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                            Bundle param = new Bundle();
+                            //param.putString("fields", "friendlist", "members");
+                            graphRequest.setParameters(param);
+                            graphRequest.executeAsync();
+
+                            //Change the intent now
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            ;
+                            startActivity(intent);
+                            finish();
                         }
-                    });
-                    Bundle param = new Bundle();
-                    //param.putString("fields", "friendlist", "members");
-                    graphRequest.setParameters(param);
-                    graphRequest.executeAsync();
 
-                    //Change the intent now
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);;
-                    startActivity(intent);
-                    finish();
-                }
+                        @Override
+                        public void onCancel() {
+                            Log.d("login", "Login Canceled");
+                        }
 
-                @Override
-                public void onCancel() {
-                    Log.d("login", "Login Canceled");
-                }
-
-                @Override
-                public void onError(FacebookException error) {
-                    Log.d("login", "Login Error Happened");
-                }
-            }
-        );
+                        @Override
+                        public void onError(FacebookException error) {
+                            Log.d("login", "Login Error Happened");
+                        }
+                    }
+            );
+        }
     }
 
     @Override
