@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.bjaso.cs3714finalproj.fragments.EventFragment;
 import com.example.bjaso.cs3714finalproj.fragments.HomeFragment;
@@ -30,7 +32,8 @@ import com.facebook.login.LoginManager;
  */
 
 
-public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, ActivityInteraction {
+public class MainActivity extends AppCompatActivity implements HomeScreenInteraction,
+        ActivityInteraction {
 
 
     private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment;
@@ -46,10 +49,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        // TEST MAP
-//        Intent myIntent = new Intent(MainActivity.this, MapsActivity.class); //Optional parameters
-//        this.startActivity(myIntent);
 
         Log.d("final", "status:" + prefs.getString("status", ""));
 
@@ -177,12 +176,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         return true;
     }
 
-//    @Override
-//    public void InitiateLoginActivity() {
-//        Intent intent = new Intent(getBaseContext(), LoginScreen.class);
-//        startActivity(intent);
-//        finish();
-//    }
     @Override
     public void InitiateLoginActivity() {
 //        Intent intent = new Intent(getBaseContext(), LoginScreen.class);
