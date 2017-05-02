@@ -57,6 +57,7 @@ public class DataParser {
         String vicinity = "-NA-";
         String photoReference = "";
         String id = "";
+        String rating = "";
         String latitude = "";
         String longitude = "";
         String reference = "";
@@ -76,6 +77,9 @@ public class DataParser {
             if (!googlePlaceJson.isNull("photos")) {
                 photoReference = googlePlaceJson.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
             }
+            if (!googlePlaceJson.isNull("rating")) {
+                rating = googlePlaceJson.getString("rating");
+            }
             latitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lat");
             longitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lng");
             reference = googlePlaceJson.getString("reference");
@@ -83,6 +87,7 @@ public class DataParser {
             googlePlaceMap.put("vicinity", vicinity);
             googlePlaceMap.put("photo_reference", photoReference);
             googlePlaceMap.put("place_id", id);
+            googlePlaceMap.put("rating", rating);
             googlePlaceMap.put("lat", latitude);
             googlePlaceMap.put("lng", longitude);
             googlePlaceMap.put("reference", reference);

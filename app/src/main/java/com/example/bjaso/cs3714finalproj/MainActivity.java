@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     private String profileName;
     private String gender;
     private String birthday;
+    private String vicinity;
+    private String rating;
 
     private FragmentManager fragmentManager;
     AccessToken token = AccessToken.getCurrentAccessToken();
@@ -201,6 +203,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
                 placeID = data.getStringExtra("place_id");
                 name = data.getStringExtra("name");
                 photoReference = data.getStringExtra("photo_reference");
+                vicinity = data.getStringExtra("vicinity");
+                rating = data.getStringExtra("rating");
                 Log.d("Result", getPlaceID());
                 Log.d("Result", getName());
                 Log.d("Result", getPhotoReference());
@@ -222,6 +226,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     }
     public String getPhotoReference() {
         return photoReference;
+    }
+    public String getVicinity() {
+        return vicinity;
+    }
+    public String getRating() {
+        return rating;
     }
 
     public AccessToken getToken() {
