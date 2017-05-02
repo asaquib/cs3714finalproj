@@ -1,6 +1,8 @@
 package com.example.bjaso.cs3714finalproj;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -12,15 +14,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bjaso.cs3714finalproj.googlemapsnearbyplaces.GetNearbyPlacesData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,21 +41,31 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener,
+        GoogleMap.OnMarkerClickListener,
+        View.OnClickListener {
 
+    private Place place;
     private GoogleMap mMap;
     double latitude;
     double longitude;
     private int PROXIMITY_RADIUS = 20000;
+    private Button btnChoose;
+    private boolean firstLoc = true;
+    private LatLng currPos;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+    Marker selectedTrail;
     LocationRequest mLocationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        btnChoose = (Button) findViewById(R.id.btnChoose);
+        btnChoose.setOnClickListener(this);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -95,6 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setOnMarkerClickListener(this);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -109,30 +128,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
-//        Button btnTrails = (Button) findViewById(R.id.btnTrails);
-//        btnTrails.setOnClickListener(new View.OnClickListener() {
-//            String Trails = "hiking+trails";
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("onClick", "Button is Clicked");
-//                mMap.clear();
-//                String url = getUrl(latitude, longitude, Trails);
-//                Object[] DataTransfer = new Object[2];
-//                DataTransfer[0] = mMap;
-//                DataTransfer[1] = url;
-//                Log.d("onClick", url);
-//                GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-//                getNearbyPlacesData.execute(DataTransfer);
-//                Toast.makeText(MapsActivity.this,"Nearby Trails", Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
+                .addApi(Places.GEO_DATA_API)
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
@@ -181,16 +183,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        if (firstLoc) {
+            currPos = new LatLng(location.getLatitude(), location.getLongitude());
+            firstLoc = false;
+        }
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-        Toast.makeText(MapsActivity.this,"Your Current Location", Toast.LENGTH_LONG).show();
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f",latitude,longitude));
 
@@ -203,7 +204,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("onClick", url);
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
         getNearbyPlacesData.execute(DataTransfer);
-        Toast.makeText(MapsActivity.this,"Nearby Trails", Toast.LENGTH_LONG).show();
+
+        //move map camera
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        Log.d("Camera", "Camera moved");
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -212,6 +217,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         Log.d("onLocationChanged", "Exit");
 
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        btnChoose.setVisibility(View.VISIBLE);
+        marker.showInfoWindow();
+        selectedTrail = marker;
+        return true;
     }
 
     @Override
@@ -285,4 +298,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onClick(View v) {
+
+        Places.GeoDataApi.getPlaceById(mGoogleApiClient, selectedTrail.getTag().toString())
+            .setResultCallback(new ResultCallback<PlaceBuffer>() {
+                @Override
+                public void onResult(PlaceBuffer places) {
+                    if (places.getStatus().isSuccess() && places.getCount() > 0) {
+                        final Place myPlace = places.get(0);
+                        Log.i("result", "Place found: " + myPlace.getName());
+
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("place_id", selectedTrail.getTag().toString());
+                        returnIntent.putExtra("name", myPlace.getName());
+                        setResult(Activity.RESULT_OK, returnIntent);
+                        finish();
+                    } else {
+                        Log.e("result", "Place not found");
+                    }
+                    places.release();
+                }
+            });
+    }
 }

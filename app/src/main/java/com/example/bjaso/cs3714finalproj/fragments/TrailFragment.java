@@ -4,12 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.bjaso.cs3714finalproj.MainActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
@@ -19,7 +22,11 @@ import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
 public class TrailFragment extends Fragment implements View.OnClickListener{
     public static final String TRAIL_FRAGMENT = "trail_fragment";
+
+    private String trailID;
+    private String trailName;
     private ImageView image;
+    private TextView title;
     private Button home;
     private Button event;
     private Button map;
@@ -48,8 +55,14 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trail, container, false);
+        MainActivity activity = (MainActivity) getActivity();
+        trailID = activity.getPlaceID();
+        trailName = activity.getName();
 
         image = (ImageView) view.findViewById(R.id.trailImage);
+        title = (TextView) view.findViewById(R.id.trailName);
+        Log.d("trailName", trailName);
+        title.setText(trailName);
         image.setImageResource(R.drawable.huckleberry_trail);
         //Navigation items
         home = (Button) view.findViewById(R.id.homeButton);

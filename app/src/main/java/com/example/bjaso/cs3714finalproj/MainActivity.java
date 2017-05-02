@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
     private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment, profileFragment;
 
+    static final int MAP_REQUEST = 1;
+    private String placeID;
+    private String name;
+
     private FragmentManager fragmentManager;
     AccessToken token = AccessToken.getCurrentAccessToken();
 
@@ -78,16 +82,15 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             fragmentManager.beginTransaction().replace(R.id.frame, homeFragment ).commit();
         } else {
 
-
-                homeFragment = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT);
-                // Get referencecs to the fragments if they existed, null otherwise
-                eventFragment = fragmentManager.findFragmentByTag(EventFragment.EVENT_FRAGMENT);
+            homeFragment = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT);
+            // Get referencecs to the fragments if they existed, null otherwise
+            eventFragment = fragmentManager.findFragmentByTag(EventFragment.EVENT_FRAGMENT);
 //                ((RetainedFragmentInteraction)taskFragment).setActiveFragmentTag(MapFragment.MAP_FRAGMENT);
-                mapFragment = fragmentManager.findFragmentByTag(MapFragment.MAP_FRAGMENT);
+            mapFragment = fragmentManager.findFragmentByTag(MapFragment.MAP_FRAGMENT);
 
-                trailFragment = fragmentManager.findFragmentByTag(TrailFragment.TRAIL_FRAGMENT);
+            trailFragment = fragmentManager.findFragmentByTag(TrailFragment.TRAIL_FRAGMENT);
 
-                profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.PROFILE_FRAGMENT);
+            profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.PROFILE_FRAGMENT);
 
 
         }
@@ -133,9 +136,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
                 ft.replace(R.id.frame, fragment,
                         ((RetainedFragmentInteraction)taskFragment).getActiveFragmentTag());
                 ft.addToBackStack(null);
-                ft.commit();
-
-
+                ft.commitAllowingStateLoss();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,6 +185,26 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MAP_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                placeID = data.getStringExtra("place_id");
+                name = data.getStringExtra("name");
+                Log.d("Result", placeID);
+                Log.d("Result", getName());
+                changeFragment(TrailFragment.TRAIL_FRAGMENT);
+            }
+        }
+    }
+
+    public String getPlaceID() {
+        return placeID;
+    }
+    public String getName() {
+        return name;
     }
 
 }

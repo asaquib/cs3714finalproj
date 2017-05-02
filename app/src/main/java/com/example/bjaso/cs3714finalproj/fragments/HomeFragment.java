@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,15 @@ import com.example.bjaso.cs3714finalproj.MapsActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by pejman on 4/27/2017.
  */
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
+
+    static final int MAP_REQUEST = 1;
     public static final String HOME_FRAGMENT = "home_fragment";
     private Button home;
     private Button event;
@@ -83,6 +88,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public void initiateMapActivity() {
         Intent intent = new Intent(getActivity(), MapsActivity.class);
-        getActivity().startActivity(intent);
+        getActivity().startActivityForResult(intent, MAP_REQUEST);
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == MAP_REQUEST) {
+//            if (resultCode == RESULT_OK) {
+//                String ID = data.getStringExtra("result");
+//                Log.d("Result", ID);
+//            }
+//        }
+//    }
 }
