@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     static final int MAP_REQUEST = 1;
     private String placeID;
     private String name;
+    private String photoReference;
 
     private FragmentManager fragmentManager;
     AccessToken token = AccessToken.getCurrentAccessToken();
@@ -193,8 +194,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             if (resultCode == RESULT_OK) {
                 placeID = data.getStringExtra("place_id");
                 name = data.getStringExtra("name");
-                Log.d("Result", placeID);
+                photoReference = data.getStringExtra("photo_reference");
+                Log.d("Result", getPlaceID());
                 Log.d("Result", getName());
+                Log.d("Result", getPhotoReference());
                 changeFragment(TrailFragment.TRAIL_FRAGMENT);
             }
         }
@@ -205,6 +208,9 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     }
     public String getName() {
         return name;
+    }
+    public String getPhotoReference() {
+        return photoReference;
     }
 
 }

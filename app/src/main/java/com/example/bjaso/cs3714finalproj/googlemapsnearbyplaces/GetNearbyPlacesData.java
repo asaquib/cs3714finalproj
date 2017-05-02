@@ -9,6 +9,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
@@ -63,7 +64,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + vicinity);
-            mMap.addMarker(markerOptions).setTag(googlePlace.get("place_id"));
+            mMap.addMarker(markerOptions).setTag(googlePlace.get("place_id") + " " + googlePlace.get("photo_reference"));
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
             //move map camera
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

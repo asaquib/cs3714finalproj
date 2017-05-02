@@ -1,6 +1,9 @@
 package com.example.bjaso.cs3714finalproj.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +19,8 @@ import com.example.bjaso.cs3714finalproj.MainActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
+import java.io.InputStream;
+
 /**
  * Created by bjaso on 4/18/2017.
  */
@@ -23,7 +28,7 @@ import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 public class TrailFragment extends Fragment implements View.OnClickListener{
     public static final String TRAIL_FRAGMENT = "trail_fragment";
 
-    private String trailID;
+    private String trailPhotoReference;
     private String trailName;
     private ImageView image;
     private TextView title;
@@ -34,6 +39,31 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
     public static TrailFragment newInstance() {
         TrailFragment fragment = new TrailFragment();
         return fragment;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     @Override
@@ -56,19 +86,22 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trail, container, false);
         MainActivity activity = (MainActivity) getActivity();
-        trailID = activity.getPlaceID();
+        trailPhotoReference = activity.getPhotoReference();
         trailName = activity.getName();
 
-        image = (ImageView) view.findViewById(R.id.trailImage);
+        //image = (ImageView) view.findViewById(R.id.trailImage);
         title = (TextView) view.findViewById(R.id.trailName);
         Log.d("trailName", trailName);
         title.setText(trailName);
-        image.setImageResource(R.drawable.huckleberry_trail);
+        //image.setImageResource(R.drawable.huckleberry_trail);
         //Navigation items
         home = (Button) view.findViewById(R.id.homeButton);
         event = (Button) view.findViewById(R.id.eventButton);
         map = (Button) view.findViewById(R.id.mapButton);
 
+        String url = getPhotoUrl(trailPhotoReference, 1080);
+        new DownloadImageTask((ImageView) view.findViewById(R.id.trailImage))
+                .execute(url);
 
         //Navigation actions
         home.setOnClickListener(this);
@@ -96,5 +129,14 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
         {
             activity.changeFragment(MapFragment.MAP_FRAGMENT);
         }
+    }
+
+    private String getPhotoUrl(String photoReference, int maxWidth) {
+        StringBuilder googlePhotosUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/photo?");
+        googlePhotosUrl.append("maxwidth=" + maxWidth);
+        googlePhotosUrl.append("&photoreference=" + photoReference);
+        googlePhotosUrl.append("&key=" + getString(R.string.google_maps_key));
+        Log.d("getPhotoUrl", googlePhotosUrl.toString());
+        return (googlePhotosUrl.toString());
     }
 }

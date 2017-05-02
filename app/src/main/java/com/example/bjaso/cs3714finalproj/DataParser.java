@@ -55,6 +55,7 @@ public class DataParser {
         HashMap<String, String> googlePlaceMap = new HashMap<String, String>();
         String placeName = "-NA-";
         String vicinity = "-NA-";
+        String photoReference = "";
         String id = "";
         String latitude = "";
         String longitude = "";
@@ -72,11 +73,15 @@ public class DataParser {
             if (!googlePlaceJson.isNull("place_id")) {
                 id = googlePlaceJson.getString("place_id");
             }
+            if (!googlePlaceJson.isNull("photos")) {
+                photoReference = googlePlaceJson.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+            }
             latitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lat");
             longitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lng");
             reference = googlePlaceJson.getString("reference");
             googlePlaceMap.put("place_name", placeName);
             googlePlaceMap.put("vicinity", vicinity);
+            googlePlaceMap.put("photo_reference", photoReference);
             googlePlaceMap.put("place_id", id);
             googlePlaceMap.put("lat", latitude);
             googlePlaceMap.put("lng", longitude);
