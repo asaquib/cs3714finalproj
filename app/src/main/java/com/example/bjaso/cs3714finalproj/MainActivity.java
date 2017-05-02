@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.bjaso.cs3714finalproj.fragments.EventFragment;
 import com.example.bjaso.cs3714finalproj.fragments.HomeFragment;
@@ -31,7 +33,8 @@ import com.facebook.login.LoginManager;
  */
 
 
-public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, ActivityInteraction {
+public class MainActivity extends AppCompatActivity implements HomeScreenInteraction,
+        ActivityInteraction {
 
 
     private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment, profileFragment;
@@ -50,14 +53,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
         Log.d("final", "status:" + prefs.getString("status", ""));
 
-
-
         if (token != null) {
-
-
             Log.d("hiking", "logged in");
-
-
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             this.startActivity(intent);
@@ -81,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             fragmentManager.beginTransaction().replace(R.id.frame, homeFragment ).commit();
         } else {
 
+
                 homeFragment = fragmentManager.findFragmentByTag(HomeFragment.HOME_FRAGMENT);
                 // Get referencecs to the fragments if they existed, null otherwise
                 eventFragment = fragmentManager.findFragmentByTag(EventFragment.EVENT_FRAGMENT);
@@ -91,13 +89,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
                 profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.PROFILE_FRAGMENT);
 
-            }
 
-
-
-
+        }
 
     }
+
     public void changeFragment(String fragment_name) {
 
         Fragment fragment;
@@ -189,13 +185,5 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-//    @Override
-//    public void InitiateLoginActivity() {
-//        Intent intent = new Intent(getBaseContext(), LoginScreen.class);
-//        startActivity(intent);
-//        finish();
-//    }
-
 
 }

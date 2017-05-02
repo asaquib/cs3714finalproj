@@ -8,14 +8,17 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="221dp"
-        android:layout_height="149dp"
-        android:layout_marginLeft="82dp"
-        android:layout_marginTop="102dp"
+        android:layout_width="292dp"
+        android:layout_height="204dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginTop="25dp"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/huckleberry_trail" />
+        android:src="@drawable/huckleberry_trail"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0" />
 
 
     <com.facebook.login.widget.LoginButton
