@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.example.bjaso.cs3714finalproj.fragments.EventFragment;
 import com.example.bjaso.cs3714finalproj.fragments.HomeFragment;
 import com.example.bjaso.cs3714finalproj.fragments.MapFragment;
+import com.example.bjaso.cs3714finalproj.fragments.ProfileFragment;
 import com.example.bjaso.cs3714finalproj.fragments.TaskFragment;
 import com.example.bjaso.cs3714finalproj.fragments.TrailFragment;
 import com.example.bjaso.cs3714finalproj.interfaces.ActivityInteraction;
@@ -33,7 +34,7 @@ import com.facebook.login.LoginManager;
 public class MainActivity extends AppCompatActivity implements HomeScreenInteraction, ActivityInteraction {
 
 
-    private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment;
+    private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment, profileFragment;
 
     private FragmentManager fragmentManager;
     AccessToken token = AccessToken.getCurrentAccessToken();
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
                 trailFragment = fragmentManager.findFragmentByTag(TrailFragment.TRAIL_FRAGMENT);
 
+                profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.PROFILE_FRAGMENT);
+
             }
 
 
@@ -116,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         }
         else if(fragment_name.equals(TrailFragment.TRAIL_FRAGMENT)){
             fragmentClass = TrailFragment.class;
+
+            Log.d("cs3714finalproj", "TRAIL FRAGMENT SELECTED");
+        }
+        else if(fragment_name.equals(ProfileFragment.PROFILE_FRAGMENT)){
+            fragmentClass = ProfileFragment.class;
 
             Log.d("cs3714finalproj", "TRAIL FRAGMENT SELECTED");
         }
@@ -161,8 +169,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         if (id == R.id.action_settings) {
 
         }
-        else if (id == R.id.action_message) {
-
+        else if (id == R.id.action_profile) {
+            changeFragment(ProfileFragment.PROFILE_FRAGMENT);
         }
 
         else if (id == R.id.action_logout) {
@@ -188,11 +196,6 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 //        startActivity(intent);
 //        finish();
 //    }
-    @Override
-    public void InitiateLoginActivity() {
-//        Intent intent = new Intent(getBaseContext(), LoginScreen.class);
-//        startActivity(intent);
-//        finish();
-    }
+
 
 }

@@ -6,6 +6,4 @@ package com.example.bjaso.cs3714finalproj.interfaces;
 
 public interface LogInScreenInteraction {
 
-    void LoginStatus(String status);
-    void NetworkingFlagUpdate(Boolean busyNetworking);
 }

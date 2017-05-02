@@ -6,5 +6,4 @@ package com.example.bjaso.cs3714finalproj.interfaces;
 
 public interface ActivityInteraction {
 
-    void InitiateLoginActivity();
 }

@@ -72,18 +72,6 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
 
     }
 
-    @Override
-    public void loginResult(String result) {
-
-//        Log.d("hw3","login check:"+result);
-//    if(result.equals(Constants.STATUS_RELOGIN)){
-//        activity.InitiateLoginActivity();
-//    }
-
-    }
-
-
-
 
     // checks if the background service is running
     public boolean isBackgroundServiceRunning() {
@@ -97,21 +85,5 @@ public class TaskFragment extends Fragment implements RetainedFragmentInteractio
         }
         return false;
     }
-
-
-    @Override
-    public void startBackgroundServiceNeeded() {
-
-//
-//                // check if the background service is running, if not then start it
-//                if (!isBackgroundServiceRunning()) {
-//                    Intent intent = new Intent(getActivity(), BackgroundService.class);
-//                    getActivity().startService(intent);
-//                    Log.d("background_service", "BackgroundService  TOLD TO START!");
-//
-//                }
-
-    }
-
 
 }

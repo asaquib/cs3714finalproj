@@ -15,6 +15,10 @@
         android:protectionLevel="signature"/>
     <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
 
+    <provider android:authorities="com.facebook.app.FacebookContentProvider450461795304269"
+              android:name="com.facebook.FacebookContentProvider"
+        android:exported="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
