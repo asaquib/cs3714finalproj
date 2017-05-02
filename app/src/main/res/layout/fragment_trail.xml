@@ -49,7 +49,9 @@
                 android:layout_height="wrap_content"
                 android:text="Review 1"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                app:layout_constraintTop_toBottomOf="@+id/description"
+                android:background="@drawable/newbutton"
+                android:textColor="#FFFF"/>
 
             <Button
                 android:id="@+id/review2"
@@ -57,7 +59,9 @@
                 android:layout_height="wrap_content"
                 android:text="Review 2"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/review1" />
+                app:layout_constraintTop_toBottomOf="@+id/review1"
+                android:background="@drawable/newbutton"
+                android:textColor="#FFFF"/>
 
             <Button
                 android:id="@+id/review3"
@@ -65,7 +69,9 @@
                 android:layout_height="wrap_content"
                 android:text="Review 3"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/review2" />
+                app:layout_constraintTop_toBottomOf="@+id/review2"
+                android:background="@drawable/newbutton"
+                android:textColor="#FFFF"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
@@ -78,7 +84,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/eventButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="1dp" />
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/newbutton"
+        android:textColor="#FFFF"/>
 
     <Button
         android:id="@+id/eventButton"
@@ -88,7 +96,9 @@
         app:layout_constraintLeft_toRightOf="@+id/homeButton"
         app:layout_constraintRight_toLeftOf="@+id/mapButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="1dp" />
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/newbutton"
+        android:textColor="#FFFF"/>
 
     <Button
         android:id="@+id/mapButton"
@@ -98,6 +108,8 @@
         app:layout_constraintLeft_toRightOf="@+id/eventButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="1dp" />
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/newbutton"
+        android:textColor="#FFFF"/>
 
 </android.support.constraint.ConstraintLayout>
