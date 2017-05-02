@@ -2,15 +2,17 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/gradientbackground">
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="540dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/homeButton"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,55 +25,34 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/huckleberry_trail" />
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
 
             <TextView
                 android:id="@+id/trailName"
-                android:layout_width="395dp"
+                android:layout_width="368dp"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="trailName"
                 android:textSize="24sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trailImage" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/vicinity"
                 android:layout_width="395dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/description"
+                android:text="vicinity"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trailName" />
 
-            <Button
-                android:id="@+id/review1"
+            <TextView
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review 1"
+                android:layout_height="480dp"
+                android:text="rating"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description"
-                android:background="@drawable/newbutton"
-                android:textColor="#FFFF"/>
-
-            <Button
-                android:id="@+id/review2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review 2"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/review1"
-                android:background="@drawable/newbutton"
-                android:textColor="#FFFF"/>
-
-            <Button
-                android:id="@+id/review3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Review 3"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/review2"
-                android:background="@drawable/newbutton"
-                android:textColor="#FFFF"/>
+                app:layout_constraintTop_toBottomOf="@+id/vicinity"/>
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

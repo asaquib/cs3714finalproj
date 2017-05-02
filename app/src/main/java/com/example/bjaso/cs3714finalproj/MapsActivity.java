@@ -301,7 +301,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onClick(View v) {
 
-        Places.GeoDataApi.getPlaceById(mGoogleApiClient, selectedTrail.getTag().toString().split(" ")[0])
+        Places.GeoDataApi.getPlaceById(mGoogleApiClient, selectedTrail.getTag().toString().split("\\|")[0])
             .setResultCallback(new ResultCallback<PlaceBuffer>() {
                 @Override
                 public void onResult(PlaceBuffer places) {
@@ -309,12 +309,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         final Place myPlace = places.get(0);
                         Log.i("result", "Place found: " + myPlace.getName());
 
-                        String[] tokens = selectedTrail.getTag().toString().split(" ");
+                        String[] tokens = selectedTrail.getTag().toString().split("\\|");
 
                         Intent returnIntent = new Intent();
                         returnIntent.putExtra("place_id", tokens[0]);
                         returnIntent.putExtra("name", myPlace.getName());
                         returnIntent.putExtra("photo_reference", tokens[1]);
+                        returnIntent.putExtra("vicinity", tokens[2]);
+                        String rating = "~";
+                        if (tokens.length > 3) {
+                            rating = tokens[3];
+                        }
+                        returnIntent.putExtra("rating", rating);
                         setResult(Activity.RESULT_OK, returnIntent);
                         finish();
                     } else {

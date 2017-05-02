@@ -19,6 +19,8 @@ import com.example.bjaso.cs3714finalproj.MainActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 
 /**
@@ -30,7 +32,10 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
 
     private String trailPhotoReference;
     private String trailName;
-    private ImageView image;
+    private String trailVicinity;
+    private String trailRating;
+    private TextView vicinity;
+    private TextView rating;
     private TextView title;
     private Button home;
     private Button event;
@@ -88,12 +93,17 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
         MainActivity activity = (MainActivity) getActivity();
         trailPhotoReference = activity.getPhotoReference();
         trailName = activity.getName();
+        trailVicinity = activity.getVicinity();
+        trailRating = activity.getRating();
 
-        //image = (ImageView) view.findViewById(R.id.trailImage);
         title = (TextView) view.findViewById(R.id.trailName);
+        vicinity = (TextView) view.findViewById(R.id.vicinity);
+        rating = (TextView) view.findViewById(R.id.rating);
         Log.d("trailName", trailName);
         title.setText(trailName);
-        //image.setImageResource(R.drawable.huckleberry_trail);
+        vicinity.setText("Location: " + trailVicinity);
+        rating.setText("Rating: " + trailRating + "/5");
+
         //Navigation items
         home = (Button) view.findViewById(R.id.homeButton);
         event = (Button) view.findViewById(R.id.eventButton);
