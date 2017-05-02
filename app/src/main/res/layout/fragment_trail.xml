@@ -29,7 +29,7 @@
                 android:id="@+id/trailName"
                 android:layout_width="395dp"
                 android:layout_height="wrap_content"
-                android:text="Huckleberry Trail"
+                android:text=""
                 android:textSize="24sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trailImage" />
