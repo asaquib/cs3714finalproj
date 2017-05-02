@@ -40,9 +40,13 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment, profileFragment;
 
     static final int MAP_REQUEST = 1;
+    static final int PROFILE_REQUEST = 5;
     private String placeID;
     private String name;
     private String photoReference;
+    private String profileName;
+    private String gender;
+    private String birthday;
 
     private FragmentManager fragmentManager;
     AccessToken token = AccessToken.getCurrentAccessToken();
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             Log.d("hiking", "logged in");
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
-            this.startActivity(intent);
+            this.startActivityForResult(intent, PROFILE_REQUEST);
             finish();
 
         }
@@ -168,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
         }
         else if (id == R.id.action_profile) {
+            Bundle bundle = new Bundle();
+            
             changeFragment(ProfileFragment.PROFILE_FRAGMENT);
         }
 
@@ -201,6 +207,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
                 changeFragment(TrailFragment.TRAIL_FRAGMENT);
             }
         }
+        if (requestCode == PROFILE_REQUEST){
+            profileName = data.getStringExtra("profile_name");
+            birthday = data.getStringExtra("birthday");
+            gender = data.getStringExtra("gender");
+        }
     }
 
     public String getPlaceID() {
@@ -213,4 +224,11 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         return photoReference;
     }
 
+    public AccessToken getToken() {
+        return token;
+    }
+
+    public void setToken(AccessToken token) {
+        this.token = token;
+    }
 }

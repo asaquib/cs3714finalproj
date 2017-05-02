@@ -1,6 +1,8 @@
 package com.example.bjaso.cs3714finalproj.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,10 +16,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bjaso.cs3714finalproj.LoginActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 import com.example.bjaso.cs3714finalproj.interfaces.ProfileInteraction;
 import com.example.bjaso.cs3714finalproj.network.ProfileDataAsyncTask;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -27,8 +36,9 @@ import java.net.URL;
  * Created by root on 4/29/17.
  */
 
-public class ProfileFragment extends Fragment implements View.OnClickListener, ProfileInteraction {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
     public static final String PROFILE_FRAGMENT = "profile_fragment";
+    static final int PROFILE_REQUEST = 5;
 
     private HomeScreenInteraction activity;
 
@@ -41,7 +51,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     TextView genderView;
     private ImageView image;
 
-    private ProfileDataAsyncTask profileCheck;
+    AccessToken token = AccessToken.getCurrentAccessToken();
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
@@ -57,7 +67,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile, container, false);
 
-        checkProfile();
+
 
 //        try {
 //            bitmap = getFacebookProfilePicture(facebookId);
@@ -115,19 +125,5 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
 //        return bitmap;
 //    }
 
-    @Override
-    public void setProfileData(String id, String birthDay, String firstName, String lastName, String gender) {
-        this.facebookId = id;
-        this.birthDay = birthDay;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-    }
-
-    @Override
-    public void checkProfile() {
-        profileCheck = new ProfileDataAsyncTask(getActivity(),this);
-        profileCheck.execute();
-    }
 
 }

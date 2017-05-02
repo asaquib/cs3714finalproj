@@ -24,51 +24,24 @@ import org.json.JSONObject;
  */
 
 public class ProfileDataAsyncTask extends AsyncTask {
-    private ProfileInteraction profileFragment;
     private Context context;
     AccessToken accessToken;
 
     JSONObject profileInfo;
     private String id, birthDay, firstName, lastName, gender;
 
-    public ProfileDataAsyncTask(Context context, ProfileFragment mProfileFragment){
+    public ProfileDataAsyncTask(Context context){
 
         this.context=context;
-        this.profileFragment =(ProfileInteraction)mProfileFragment;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
-        FacebookSdk.addLoggingBehavior(LoggingBehavior.REQUESTS);
-        GraphRequest request = GraphRequest.newMeRequest(
-                accessToken,
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        // Application code
-                        if (response != null) {
-                            Log.d("check", response.toString());
-                            try {
-                                id = (String) object.get("id");
-                                birthDay = (String) object.get("birthday");
-                                firstName = (String) object.get("first_name");
-                                lastName = (String) object.get("last_name");
-                                gender = (String) object.get("gender");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,link");
-        request.setParameters(parameters);
-        request.executeAsync();
         return null;
     }
 
     @Override
     protected void onPostExecute(Object o) {
-        profileFragment.setProfileData(id, birthDay, firstName, lastName, gender);
+
     }
 }

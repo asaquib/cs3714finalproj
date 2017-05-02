@@ -5,6 +5,7 @@ package com.example.bjaso.cs3714finalproj;
  */
 
 
+import com.example.bjaso.cs3714finalproj.interfaces.ProfileInteraction;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,7 +22,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -82,20 +82,17 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                         @Override
                         public void onSuccess(LoginResult loginResult) {
                             Log.d("login", "Login Success");
-                            //friend json parse??? not working at this point <----------------------------------------------------__!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
                             AccessToken token = AccessToken.getCurrentAccessToken();
                             GraphRequest graphRequest = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
                                 @Override
                                 public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
-                                    try {
-                                        JSONArray jsonArrayFriends = jsonObject.getJSONObject("friendlist").getJSONArray("data");
-                                        JSONObject friendlistObject = jsonArrayFriends.getJSONObject(0);
-                                        String frienListID = friendlistObject.getString("id");
-                                        //myNewGraphReq(friendListID);
+                                    Log.d("graphResponse", graphResponse.getRawResponse());
 
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    JSONArray data = graphResponse.getJSONObject().optJSONArray("data");
+
+                                    Intent returnIntent = new Intent();
+//
+                                    setResult(Activity.RESULT_OK, returnIntent);
                                 }
                             });
                             Bundle param = new Bundle();
@@ -135,25 +132,4 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
     }
 
-
-
-/*
-    @Override
-    public void LoginStatus(String status) {
-        //saving login status into persistence
-        editor.putString("status",status).commit();
-
-        if(status!= Constants.STATUS_RELOGIN) {
-
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(status,true);
-            this.startActivity(intent);
-            finish();
-
-        }else{
-            Toast.makeText(this, "Failed to login: wrong username or password", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-*/
 }
