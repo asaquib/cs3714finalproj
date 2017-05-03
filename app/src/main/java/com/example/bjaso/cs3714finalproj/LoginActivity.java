@@ -5,17 +5,6 @@ package com.example.bjaso.cs3714finalproj;
  */
 
 
-import com.example.bjaso.cs3714finalproj.interfaces.ProfileInteraction;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -25,8 +14,16 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,10 +86,20 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                                     Log.d("graphResponse", graphResponse.getRawResponse());
 
                                     JSONArray data = graphResponse.getJSONObject().optJSONArray("data");
+                                    try{
+                                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                        intent.putExtra("id",jsonObject.get("id").toString());
+                                        intent.putExtra("name",jsonObject.get("name").toString());
+                                        setResult(Activity.RESULT_OK, intent);
+                                        Log.d("graphResponse",jsonObject.get("name").toString());
+                                        finish();
+                                    }
+                                    catch (JSONException e)
+                                    {
+                                        Log.d("graphRespose", "NO ID OR USERNAME");
+                                    }
 
-                                    Intent returnIntent = new Intent();
-//
-                                    setResult(Activity.RESULT_OK, returnIntent);
+
                                 }
                             });
                             Bundle param = new Bundle();
@@ -101,11 +108,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                             graphRequest.executeAsync();
 
                             //Change the intent now
-                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                            ;
-                            startActivity(intent);
-                            finish();
+
                         }
+
 
                         @Override
                         public void onCancel() {
@@ -130,6 +135,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+
     }
 
 }

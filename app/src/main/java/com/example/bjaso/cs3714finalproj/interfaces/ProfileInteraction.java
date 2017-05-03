@@ -5,6 +5,6 @@ package com.example.bjaso.cs3714finalproj.interfaces;
  */
 
 public interface ProfileInteraction {
-    public void setProfileData(String id, String birthDay, String firstDame, String lastName, String gender);
-    public void checkProfile();
+    public void setProfileData(String id, String username);
+//    public void checkProfile();
 }

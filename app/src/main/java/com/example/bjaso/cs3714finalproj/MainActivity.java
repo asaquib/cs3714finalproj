@@ -13,8 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.bjaso.cs3714finalproj.fragments.EventFragment;
 import com.example.bjaso.cs3714finalproj.fragments.HomeFragment;
@@ -40,13 +38,12 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     private Fragment trailFragment, eventFragment, mapFragment, taskFragment, homeFragment, profileFragment;
 
     static final int MAP_REQUEST = 1;
-    static final int PROFILE_REQUEST = 5;
+    static final int FB_REQUEST = 2;
     private String placeID;
     private String name;
     private String photoReference;
     private String profileName;
-    private String gender;
-    private String birthday;
+    private String id;
     private String vicinity;
     private String rating;
 
@@ -68,8 +65,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
             Log.d("hiking", "logged in");
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
-            this.startActivityForResult(intent, PROFILE_REQUEST);
-            finish();
+            this.startActivityForResult(intent, FB_REQUEST);
 
         }
         Log.d("Login Successful??", "I'm Logged in?!!!");
@@ -163,6 +159,14 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 //
 //    }
 
+    // inside on resume you need to tell the retained fragment to start the service
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        ((RetainedFragmentInteraction)taskFragment).startBackgroundServiceNeeded();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -174,17 +178,15 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
         }
         else if (id == R.id.action_profile) {
-            Bundle bundle = new Bundle();
-            
             changeFragment(ProfileFragment.PROFILE_FRAGMENT);
+
         }
 
         else if (id == R.id.action_logout) {
             // Log the user out
             LoginManager.getInstance().logOut();
             Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
+            startActivityForResult(intent, FB_REQUEST);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -211,10 +213,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
                 changeFragment(TrailFragment.TRAIL_FRAGMENT);
             }
         }
-        if (requestCode == PROFILE_REQUEST){
-            profileName = data.getStringExtra("profile_name");
-            birthday = data.getStringExtra("birthday");
-            gender = data.getStringExtra("gender");
+        if (requestCode == FB_REQUEST && resultCode == RESULT_OK){
+            profileName = data.getStringExtra("name");
+            id = data.getStringExtra("id");
+            Log.d("FaceBook: ", profileName);
         }
     }
 
@@ -233,12 +235,20 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     public String getRating() {
         return rating;
     }
-
-    public AccessToken getToken() {
-        return token;
+    public String getId(){
+        return id;
+    }
+    public String getProfileName(){
+        return profileName;
     }
 
-    public void setToken(AccessToken token) {
-        this.token = token;
-    }
+//    public AccessToken getToken() {
+//        return token;
+//    }
+//
+//    public void setToken(AccessToken token) {
+//        this.token = token;
+//    }
+
+
 }

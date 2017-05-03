@@ -1,10 +1,9 @@
 package com.example.bjaso.cs3714finalproj.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,21 +15,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bjaso.cs3714finalproj.LoginActivity;
+import com.example.bjaso.cs3714finalproj.MainActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
-import com.example.bjaso.cs3714finalproj.interfaces.ProfileInteraction;
-import com.example.bjaso.cs3714finalproj.network.ProfileDataAsyncTask;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStream;
 
 /**
  * Created by root on 4/29/17.
@@ -42,20 +31,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private HomeScreenInteraction activity;
 
-    private String birthDay, lastName, firstName, gender, facebookId;
-    Bitmap bitmap;
-
+    private String username, facebookId;
     private Button home;
-    TextView nameView;
-    TextView birthDayView;
-    TextView genderView;
+    private TextView name;
     private ImageView image;
-
-    AccessToken token = AccessToken.getCurrentAccessToken();
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         return fragment;
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     public ProfileFragment() {
@@ -67,25 +73,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile, container, false);
 
+        MainActivity activity = (MainActivity) getActivity();
+        username = activity.getProfileName();
+        facebookId = activity.getId();
 
-
-//        try {
-//            bitmap = getFacebookProfilePicture(facebookId);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-//        image.setImageBitmap(bitmap);
-        nameView = (TextView) view.findViewById(R.id.nameView);
-        genderView = (TextView) view.findViewById(R.id.genderView);
-        birthDayView = (TextView) view.findViewById(R.id.birthDayView);
-
-        nameView.setText(firstName + " " + lastName);
-        genderView.setText(gender);
-        birthDayView.setText(birthDay);
-
-
+        name = (TextView) view.findViewById(R.id.username);
+        image = (ImageView) view.findViewById(R.id.userimage);
+        name.setText(username);
         home = (Button) view.findViewById(R.id.homeButton);
+
+        String imgURL = "https://graph.facebook.com/" + facebookId + "/picture?type=square";
+        Log.d("URL: ",imgURL);
+        new DownloadImageTask(image).execute(imgURL);
 
         //Navigation actions
         home.setOnClickListener(this);
@@ -117,7 +116,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
 
     }
-
 //    public static Bitmap getFacebookProfilePicture(String userID) throws IOException {
 //        URL imageURL = new URL("https://graph.facebook.com/" + userID + "/picture?type=large");
 //        Bitmap bitmap = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());

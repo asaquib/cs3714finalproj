@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import com.example.bjaso.cs3714finalproj.MapsActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
-import static android.app.Activity.RESULT_OK;
-
 /**
  * Created by pejman on 4/27/2017.
  */
@@ -25,6 +22,7 @@ import static android.app.Activity.RESULT_OK;
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     static final int MAP_REQUEST = 1;
+    static final int FB_REQUEST = 2;
     public static final String HOME_FRAGMENT = "home_fragment";
     private Button home;
     private Button event;

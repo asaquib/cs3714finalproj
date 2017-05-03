@@ -23,16 +23,19 @@
         android:exported="true" />
 
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:name=".socketio.socketIO"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity"></activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +54,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
+        <service
+            android:name=".service.backgroundService"
+            android:enabled="true" >
+        </service>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_login_protocol_scheme" />
@@ -71,6 +77,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
+
     </application>
 
 </manifest>
