@@ -36,6 +36,7 @@ public class UserListFragment extends Fragment  implements View.OnClickListener{
 
     private DBController dbController;
     private ArrayList<Users> users;
+    String list;
     private Button home;
     private Button event;
     private Button user;

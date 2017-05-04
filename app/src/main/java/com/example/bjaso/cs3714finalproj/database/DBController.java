@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.bjaso.cs3714finalproj.data.Users;
 import com.example.bjaso.cs3714finalproj.socketio.socketIO;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -111,22 +112,22 @@ public class DBController {
                             }
                             data = new JSONObject();
                             Log.d("db", "UserName:" + username);
-//                            try {
-//
-//                                data.put("username", username);
-//                                data.put("userimage", imageuri);
-//                               // data.put("email", email);
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//
-//                            if (mSocket != null) {
-//                                mSocket.emit("User", data);
-//
-//
-//                            }
+                            try {
+
+                                data.put("username", username);
+                                data.put("userimage", imageuri);
+                               // data.put("email", email);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            if (mSocket != null) {
+                                mSocket.emit("UsersModel", data);
+
+
+                            }
 
                         } while (cursor.moveToNext());
                         if(flag)
@@ -166,22 +167,42 @@ public class DBController {
                 protected Void doInBackground(Void... params) {
                     if (!mSocket.connected())
                         mSocket.connect();
-
                     processing = true;
+
+//                    mSocket.on("UsersModel", new Emitter.Listener() {
+//                        @Override
+//                        public void call(Object... args) {
+//                            Log.d("db", "Read users called");
+//                            JSONObject json = (JSONObject) args[0];
+//                            String username = "";
+//                            String imageuri = "";
+//                            try {
+//                                username = json.getString(DBConstants.COLUMN_USERINFO_USERNAME);
+//                                imageuri = json.getString(DBConstants.COLUMN_USERINFO_PICTURE_URL);
+//                                Log.d("db", username);
+//                                Log.d("db", imageuri);
+//                                Users member = new Users(username, imageuri);
+//                                members.add(member);
+//                            }catch (JSONException e)
+//                            {
+//                                e.getMessage();
+//                            }
+//                        }
+//                    });
+
 
                     cursor = db.rawQuery("SELECT * FROM " + DBConstants.TABLE_NAME, null);
 
                     if (cursor.moveToFirst()) {
-                        do {
+//                        do {
                             String username = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_USERINFO_USERNAME));
                             String imageuri = cursor.getString(cursor.getColumnIndex(DBConstants.COLUMN_USERINFO_PICTURE_URL));
-                            //String email = cursor.getString(cursor.getColumnIndex(DBConstants.COLUM_USERINFO_EMAIL));
-                            Users member = new Users(username, imageuri);
-                            members.add(member);
+//                            String email = cursor.getString(cursor.getColumnIndex(DBConstants.COLUM_USERINFO_EMAIL));
+
 
 
                         } while (cursor.moveToNext());
-                    }
+
                     cursor.close();
 
                     processing = false;

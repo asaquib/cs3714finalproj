@@ -4,6 +4,7 @@ package com.example.bjaso.cs3714finalproj;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.d("final", "status:" + prefs.getString("status", ""));
 
         if (token != null) {

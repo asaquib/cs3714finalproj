@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.bjaso.cs3714finalproj.database.DBController;
+import com.example.bjaso.cs3714finalproj.socketio.socketIO;
 
 import io.socket.client.Socket;
 
@@ -52,15 +53,14 @@ public class backgroundService extends Service {
 
         Log.d("background_service", "BackgroundService Started!");
 
+//         Get the socket from the Application and then connect.
+        socketIO app = (socketIO) getApplication();
+        mSocket = app.getSocket();
+        mSocket.connect();
 
-        // Get the socket from the Application and then connect.
-//        socketIO app = (socketIO) getApplication();
-//        mSocket = app.getSocket();
-//        mSocket.connect();
-//
-//        // Lets initiate the database controller
-//        database_controller = new DBController(getApplicationContext(), getApplication());
-//        database_controller.OpenDB();
+        // Lets initiate the database controller
+        database_controller = new DBController(getApplicationContext(), getApplication());
+        database_controller.OpenDB();
 
 
         return Service.START_STICKY;
@@ -71,6 +71,7 @@ public class backgroundService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+                
 //            Bundle bundle = intent.getExtras();
 //            String action = intent.getAction();
 //            Log.d("BroadCastReceiver", intent.getClass() + "");
