@@ -1,6 +1,7 @@
 package com.example.bjaso.cs3714finalproj.fragments;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -74,6 +75,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.profile, container, false);
 
         MainActivity activity = (MainActivity) getActivity();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         username = activity.getProfileName();
         facebookId = activity.getId();
 
@@ -88,8 +90,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         //Navigation actions
         home.setOnClickListener(this);
+
+
         return view;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

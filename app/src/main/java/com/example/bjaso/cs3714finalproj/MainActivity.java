@@ -178,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         ((RetainedFragmentInteraction)taskFragment).startBackgroundServiceNeeded();
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
