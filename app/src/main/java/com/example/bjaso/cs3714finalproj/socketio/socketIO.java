@@ -15,7 +15,7 @@ public class socketIO extends Application {
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("http://128.173.239.242/");
+            mSocket = IO.socket("http://172.29.113.44:4000/");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

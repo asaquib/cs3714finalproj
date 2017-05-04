@@ -38,7 +38,7 @@ public class MapFragment extends Fragment implements OnClickListener {
     private Button share;
     private Button home;
     private Button event;
-    private Button map;
+    private Button users;
     private HomeScreenInteraction activity;
     public static final int REQ_PERMISSION = 2;
 
@@ -89,7 +89,7 @@ public class MapFragment extends Fragment implements OnClickListener {
         //Navigation items
         home = (Button) view.findViewById(R.id.homeButton);
         event = (Button) view.findViewById(R.id.eventButton);
-        map = (Button) view.findViewById(R.id.mapButton);
+        users = (Button) view.findViewById(R.id.mapButton);
 
         mapView.setOnClickListener(this);
         share.setOnClickListener(this);
@@ -97,7 +97,7 @@ public class MapFragment extends Fragment implements OnClickListener {
         //Navigation actions
         home.setOnClickListener(this);
         event.setOnClickListener(this);
-        map.setOnClickListener(this);
+        users.setOnClickListener(this);
 
 
 
@@ -115,9 +115,9 @@ public class MapFragment extends Fragment implements OnClickListener {
         {
             activity.changeFragment(EventFragment.EVENT_FRAGMENT);
         }
-        if(v.equals(map))
+        if(v.equals(users))
         {
-            activity.changeFragment(MapFragment.MAP_FRAGMENT);
+            activity.changeFragment(UserListFragment.USER_LIST_FRAGMENT);
         }
         if(v.equals(mapView))
         {

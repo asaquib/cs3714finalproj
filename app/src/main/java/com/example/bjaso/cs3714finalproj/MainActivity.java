@@ -1,6 +1,7 @@
 package com.example.bjaso.cs3714finalproj;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,17 +15,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.bjaso.cs3714finalproj.database.DBConstants;
+import com.example.bjaso.cs3714finalproj.database.DBController;
 import com.example.bjaso.cs3714finalproj.fragments.EventFragment;
 import com.example.bjaso.cs3714finalproj.fragments.HomeFragment;
 import com.example.bjaso.cs3714finalproj.fragments.MapFragment;
 import com.example.bjaso.cs3714finalproj.fragments.ProfileFragment;
 import com.example.bjaso.cs3714finalproj.fragments.TaskFragment;
 import com.example.bjaso.cs3714finalproj.fragments.TrailFragment;
+import com.example.bjaso.cs3714finalproj.fragments.UserListFragment;
 import com.example.bjaso.cs3714finalproj.interfaces.ActivityInteraction;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 import com.example.bjaso.cs3714finalproj.interfaces.RetainedFragmentInteraction;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by bjaso on 4/4/2017.
@@ -46,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
     private String id;
     private String vicinity;
     private String rating;
+    private DBController database_controller;
 
     private FragmentManager fragmentManager;
     AccessToken token = AccessToken.getCurrentAccessToken();
@@ -129,7 +136,10 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
 
             Log.d("cs3714finalproj", "TRAIL FRAGMENT SELECTED");
         }
-
+        else if(fragment_name.equals(UserListFragment.USER_LIST_FRAGMENT)){
+            fragmentClass = UserListFragment.class;
+            Log.d("cs3714finalproj", "USERS FRAGMENT SELECTED");
+        }
         try {
             if (fragmentClass != null) {
                 fragment = (Fragment) fragmentClass.newInstance();
@@ -216,10 +226,24 @@ public class MainActivity extends AppCompatActivity implements HomeScreenInterac
         if (requestCode == FB_REQUEST && resultCode == RESULT_OK){
             profileName = data.getStringExtra("name");
             id = data.getStringExtra("id");
+            String url = "https://graph.facebook.com/" + id + "/picture?type=square";
             Log.d("FaceBook: ", profileName);
+            database_controller = new DBController(getApplicationContext(), getApplication());
+            database_controller.OpenDB();
+            ArrayList<ContentValues> contentValues = new ArrayList<ContentValues>();
+            ContentValues value = new ContentValues();
+            value.put(DBConstants.COLUMN_USERINFO_USERNAME, profileName);
+            value.put(DBConstants.COLUMN_USERINFO_PICTURE_URL, url);
+            //value.put(DBConstants.COLUM_USERINFO_EMAIL, "");
+            contentValues.add(value);
+            database_controller.insertInfo(contentValues);
+            //database_controller.removeAll();
         }
     }
-
+    public DBController getDatabase_controller()
+    {
+        return database_controller;
+    }
     public String getPlaceID() {
         return placeID;
     }

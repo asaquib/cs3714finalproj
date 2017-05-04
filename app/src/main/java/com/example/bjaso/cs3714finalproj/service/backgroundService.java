@@ -2,22 +2,16 @@ package com.example.bjaso.cs3714finalproj.service;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.bjaso.cs3714finalproj.database.DBConstants;
 import com.example.bjaso.cs3714finalproj.database.DBController;
-import com.example.bjaso.cs3714finalproj.socketio.socketIO;
-
-import java.util.ArrayList;
 
 import io.socket.client.Socket;
 
@@ -62,13 +56,13 @@ public class backgroundService extends Service {
 
 
         // Get the socket from the Application and then connect.
-        socketIO app = (socketIO) getApplication();
-        mSocket = app.getSocket();
-        mSocket.connect();
-
-        // Lets initiate the database controller
-        database_controller = new DBController(getApplicationContext(), this, getApplication());
-        database_controller.OpenDB();
+//        socketIO app = (socketIO) getApplication();
+//        mSocket = app.getSocket();
+//        mSocket.connect();
+//
+//        // Lets initiate the database controller
+//        database_controller = new DBController(getApplicationContext(), getApplication());
+//        database_controller.OpenDB();
 
 
         return Service.START_STICKY;
@@ -79,26 +73,26 @@ public class backgroundService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Bundle bundle = intent.getExtras();
-            String action = intent.getAction();
-            Log.d("BroadCastReceiver", intent.getClass() + "");
-            String id = "";
-            String name;
-            if (bundle!=null) {
-                if(bundle.getString("id") != null)
-                    id = intent.getExtras().getString("id");
-//                name = intent.getExtras().getString("name");
-                Log.d("BroadCastReceiver", id + "");
-            }
-            ArrayList<ContentValues> contentValues = new ArrayList<ContentValues>();
-            ContentValues value = new ContentValues();
-            value.put(DBConstants.COLUMN_USERINFO_USERNAME, "Pejman Anbaei");
-            value.put(DBConstants.COLUMN_USERINFO_PICTURE_URL, "http://graph.facebook.com/" + "1505036276232986" + "/picture?type=square");
-            //value.put(DBConstants.COLUM_USERINFO_EMAIL, "");
-            contentValues.add(value);
-            if (action.contains("TIME_TICK")) {
-                database_controller.insertInfo(contentValues);
-            }
+//            Bundle bundle = intent.getExtras();
+//            String action = intent.getAction();
+//            Log.d("BroadCastReceiver", intent.getClass() + "");
+//            String id = "";
+//            String name;
+//            if (bundle!=null) {
+//                if(bundle.getString("id") != null)
+//                    id = intent.getExtras().getString("id");
+////                name = intent.getExtras().getString("name");
+//                Log.d("BroadCastReceiver", id + "");
+//            }
+//            ArrayList<ContentValues> contentValues = new ArrayList<ContentValues>();
+//            ContentValues value = new ContentValues();
+//            value.put(DBConstants.COLUMN_USERINFO_USERNAME, "Pejman Anbaei");
+//            value.put(DBConstants.COLUMN_USERINFO_PICTURE_URL, "https://graph.facebook.com/" + "1505036276232986" + "/picture?type=square");
+//            //value.put(DBConstants.COLUM_USERINFO_EMAIL, "");
+//            contentValues.add(value);
+//            if (action.contains("TIME_TICK")) {
+//                database_controller.insertInfo(contentValues);
+//            }
 //            else if(database_controller.readUsers().get(0).getUsername()!= "Pejman Anbaei")
 //            {
 //                database_controller.insertInfo(contentValues);
@@ -113,16 +107,16 @@ public class backgroundService extends Service {
 
         @Override
         public void onDestroy() {
-            Log.d("background_service", "BackgroundService Stopped!");
-
-            //inside onDestroy you need to 'unregister' the broadcast receiver
-            unregisterReceiver(receiver);
-            database_controller.CloseDB();
-            database_controller = null;
-
-            //also disconnect the mSocket
-            if (mSocket != null)
-                mSocket.disconnect();
+//            Log.d("background_service", "BackgroundService Stopped!");
+//
+//            //inside onDestroy you need to 'unregister' the broadcast receiver
+//            unregisterReceiver(receiver);
+//            database_controller.CloseDB();
+//            database_controller = null;
+//
+//            //also disconnect the mSocket
+//            if (mSocket != null)
+//                mSocket.disconnect();
             super.onDestroy();
         }
     }

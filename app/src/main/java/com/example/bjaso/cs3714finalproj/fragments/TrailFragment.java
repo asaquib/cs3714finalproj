@@ -19,8 +19,6 @@ import com.example.bjaso.cs3714finalproj.MainActivity;
 import com.example.bjaso.cs3714finalproj.R;
 import com.example.bjaso.cs3714finalproj.interfaces.HomeScreenInteraction;
 
-import org.w3c.dom.Text;
-
 import java.io.InputStream;
 
 /**
@@ -39,7 +37,7 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
     private TextView title;
     private Button home;
     private Button event;
-    private Button map;
+    private Button users;
     private HomeScreenInteraction activity;
     public static TrailFragment newInstance() {
         TrailFragment fragment = new TrailFragment();
@@ -107,7 +105,7 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
         //Navigation items
         home = (Button) view.findViewById(R.id.homeButton);
         event = (Button) view.findViewById(R.id.eventButton);
-        map = (Button) view.findViewById(R.id.mapButton);
+        users = (Button) view.findViewById(R.id.mapButton);
 
         String url = getPhotoUrl(trailPhotoReference, 1080);
         new DownloadImageTask((ImageView) view.findViewById(R.id.trailImage))
@@ -116,7 +114,7 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
         //Navigation actions
         home.setOnClickListener(this);
         event.setOnClickListener(this);
-        map.setOnClickListener(this);
+        users.setOnClickListener(this);
         return view;
     }
 
@@ -133,11 +131,11 @@ public class TrailFragment extends Fragment implements View.OnClickListener{
         }
         if(v.equals(event))
         {
-            activity.changeFragment(EventFragment.EVENT_FRAGMENT);
+            activity.changeFragment(UserListFragment.USER_LIST_FRAGMENT);
         }
-        if(v.equals(map))
+        if(v.equals(users))
         {
-            activity.changeFragment(MapFragment.MAP_FRAGMENT);
+            activity.changeFragment(UserListFragment.USER_LIST_FRAGMENT);
         }
     }
 

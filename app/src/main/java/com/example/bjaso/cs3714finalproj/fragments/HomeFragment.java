@@ -26,7 +26,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public static final String HOME_FRAGMENT = "home_fragment";
     private Button home;
     private Button event;
-    private Button map;
+    private Button users;
     private Button advButton;
     private HomeScreenInteraction activity;
     @Override
@@ -49,13 +49,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         //Navigation items
         home = (Button) view.findViewById(R.id.homeButton);
         event = (Button) view.findViewById(R.id.eventButton);
-        map = (Button) view.findViewById(R.id.mapButton);
+        users = (Button) view.findViewById(R.id.mapButton);
         advButton = (Button) view.findViewById(R.id.advButton);
 
         //Navigation actions
         home.setOnClickListener(this);
         event.setOnClickListener(this);
-        map.setOnClickListener(this);
+        users.setOnClickListener(this);
 
         advButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +77,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         {
             activity.changeFragment(EventFragment.EVENT_FRAGMENT);
         }
-        if(v.equals(map))
+        if(v.equals(users))
         {
-            activity.changeFragment(MapFragment.MAP_FRAGMENT);
+            activity.changeFragment(UserListFragment.USER_LIST_FRAGMENT);
         }
 
     }
