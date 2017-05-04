@@ -113,6 +113,13 @@ public class UserListFragment extends Fragment  implements View.OnClickListener{
             }
             protected void onPostExecute(Bitmap result) {
                 bmImage.setImageBitmap(Bitmap.createScaledBitmap(result,120,120, false));
+                notifyDataSetChanged();
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+                super.onProgressUpdate(values);
+                notifyDataSetChanged();
             }
         }
         @Override

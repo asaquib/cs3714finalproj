@@ -38,7 +38,7 @@
         android:id="@+id/mapButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="map"
+        android:text="users"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="4dp"
         android:layout_marginRight="16dp"

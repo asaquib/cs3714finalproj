@@ -18,7 +18,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="26dp"
         app:layout_constraintHorizontal_bias="0.0" />
 
     <Button
@@ -26,36 +26,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EVENT"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/homeButton"
-        android:layout_marginRight="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.275"
-        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginTop="34dp"
         android:background="@drawable/newbutton"
-        android:textColor="#FFFF"/>
+        android:textColor="#FFFF"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HOME"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/newbutton"
         android:textColor="#FFFF"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/mapButton"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/advButton"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintHorizontal_bias="0.539" />
+        app:layout_constraintTop_toBottomOf="@+id/eventButton"
+        app:layout_constraintVertical_bias="0.943" />
 
     <Button
         android:id="@+id/mapButton"
@@ -71,7 +62,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.967"
         android:background="@drawable/newbutton"
         android:textColor="#FFFF"/>
 </android.support.constraint.ConstraintLayout>

@@ -4,10 +4,8 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -42,15 +40,15 @@ public class backgroundService extends Service {
 
 
         // we need this for extracting username when 'emitting' steps to the server.
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 
         // We need to initialize an intent filter that will recognize 'ACTION_TIME_TICK'
-        IntentFilter filter = new IntentFilter(
-                Intent.ACTION_TIME_TICK);
+        //IntentFilter filter = new IntentFilter(
+               // Intent.ACTION_TIME_TICK);
 
         // We need to register our local broadcast receiver
-        registerReceiver(receiver, filter);
+        //registerReceiver(receiver, filter);
 
         Log.d("background_service", "BackgroundService Started!");
 
